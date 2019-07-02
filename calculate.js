@@ -1,6 +1,6 @@
 const DROP_RATE = 0.1
 const INCREASE_RATE = 0.05
-const WEEKLY_CP = 5000
+const WEEKLY_CP = parseInt(process.argv[3])
 const WEEKS_PER_SEASON = 13
 const BRACKETS = [
     {
@@ -174,4 +174,6 @@ class Calculate {
 
 let c = new Calculate()
 
-c.calculatePoints(4)
+c.calculatePoints(parseInt(process.argv[2]))
+
+// console.log(process.argv)
