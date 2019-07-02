@@ -1,8 +1,89 @@
-const DROP_RATE = 0.15
-const INCREASE_RATE = 0.02
-const WEEKLY_CP = 3340
+const DROP_RATE = 0.1
+const INCREASE_RATE = 0.05
+const WEEKLY_CP = 5000
 const WEEKS_PER_SEASON = 13
-const BRACKETS = [100, 1000, 4500, 10500, 19000, 30000, 43500, 59500, 78000, 99000, 122500, 148500, 177000, 208000, 241500, 277500, 316000, 357000, 400500, 446500]
+const BRACKETS = [
+    {
+        points: 100,
+        name: 'Bronze 4'
+    },
+    {
+        points: 1000,
+        name: 'Bronze 3'
+    },
+    {
+        points: 4500,
+        name: 'Bronze 2'
+    },
+    {
+        points: 10500,
+        name: 'Bronze 1'
+    },
+    {
+        points: 19000,
+        name: 'Silver 4'
+    },
+    {
+        points: 30000,
+        name: 'Silver 3'
+    },
+    {
+        points: 43500,
+        name: 'Silver 2'
+    },
+    {
+        points: 59500,
+        name: 'Silver 1'
+    },
+    {
+        points: 78000,
+        name: 'Gold 4'
+    },
+    {
+        points: 99000,
+        name: 'Gold 3'
+    },
+    {
+        points: 122500,
+        name: 'Gold 2'
+    },
+    {
+        points: 148500,
+        name: 'Gold 1'
+    },
+    {
+        points: 177000,
+        name: 'Platinum 4'
+    },
+    {
+        points: 208000,
+        name: 'Platinum 3'
+    },
+    {
+        points: 241500,
+        name: 'Platinum 2'
+    },
+    {
+        points: 277500,
+        name: 'Platinum 1'
+    },
+    {
+        points: 316000,
+        name: 'Diamond 4'
+    },
+    {
+        points: 357000,
+        name: 'Diamond 3'
+    },
+    {
+        points: 400500,
+        name: 'Diamond 2'
+    },
+    {
+        points: 446500,
+        name: 'Diamond 1'
+    }
+]
 
 class Calculate {
     
@@ -13,6 +94,8 @@ class Calculate {
             multiplier: 0
         }
 
+        this.division = ''
+
     }
 
     getMultiplier() {
@@ -20,19 +103,27 @@ class Calculate {
         // Gets the multiplier based on the brackets
 
         this.state.multiplier = 0
-
-        BRACKETS.map(item => {
-            if (this.state.CP >= item) {
-                this.state.multiplier += INCREASE_RATE
+        BRACKETS.map((item, index) => {
+            if (this.state.CP >= item.points) {
+                this.state.multiplier += (INCREASE_RATE + (Math.floor(index / 4) / 100))
             }
 
         })
 
     }
 
+    getDivision() {
+        BRACKETS.map(item => {
+            if (this.state.CP >= item.points) {
+                this.division = item.name
+            }
+        })
+        return this.division;
+    }
+
     monthlyDrop() {
 
-        // Decrease the player's CPs by 20%
+        // Decrease the player's CPs by 15%
 
         console.log("\nMonthly drop:")
         console.log("Before: ", this.state.CP)
@@ -75,7 +166,7 @@ class Calculate {
             i++;
         }
 
-        console.log("\n\nIf you earn " + WEEKLY_CP + " Clique Points a week during " + seasons + " seasons, you will have " + Math.round(this.state.CP) + " Clique Points\n")
+        console.log("\n\nIf you earn " + WEEKLY_CP + " Clique Points a week during " + seasons + " seasons, you will have " + Math.round(this.state.CP) + " Clique Points and be " + this.getDivision() + ".\n")
 
     }
 }
