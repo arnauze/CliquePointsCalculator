@@ -1,6 +1,7 @@
 const DROP_RATE = 0.1
 const INCREASE_RATE = 0.05
 const WEEKLY_CP = parseInt(process.argv[3])
+const SEASONS = parseInt(process.argv[2])
 const WEEKS_PER_SEASON = 13
 const BRACKETS = [
     {
@@ -135,7 +136,7 @@ class Calculate {
         this.getMultiplier()
     }
 
-    calculatePoints(seasons) {
+    calculatePoints() {
 
         // Takes the number of seasons and calculate the amount of points earned for a constant WEEKLY_CP
 
@@ -143,7 +144,7 @@ class Calculate {
         this.state.CP = 0;
         this.state.multiplier = 0;
 
-        while (i < seasons) {
+        while (i < SEASONS) {
 
             var k = 0;
             var j = 0;
@@ -166,14 +167,18 @@ class Calculate {
             i++;
         }
 
-        console.log("\n\nIf you earn " + WEEKLY_CP + " Clique Points a week during " + seasons + " seasons, you will have " + Math.round(this.state.CP) + " Clique Points and be " + this.getDivision() + ".\n")
+        console.log("\n\nIf you earn " + WEEKLY_CP + " Clique Points a week during " + SEASONS + " seasons, you will have " + Math.round(this.state.CP) + " Clique Points and be " + this.getDivision() + ".\n")
 
     }
 }
 
 
+// Here this is what happens at runtime 
+
 let c = new Calculate()
 
-c.calculatePoints(parseInt(process.argv[2]))
+console.log("\n\n==============================>START<==============================")
 
-// console.log(process.argv)
+c.calculatePoints(SEASONS)
+
+console.log("\n===============================>END<===============================\n\n")
